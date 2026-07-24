@@ -1,0 +1,59 @@
+# restaurant management system
+
+# Database tablename, field, datatypes
+
+Staffs
+Staff_id (int)    Staff_name (str)   Designation(str)  
+
+Foods
+Food_name(str)    Food_type(str)    Food_price(float)
+
+Drink
+Drink_name(str)    Drink_type(str)    Drink_price(float)
+
+Table_Stat
+Table_no(int)       Table_occ(int)      Table_avai(Bool)
+
+
+# User
+id
+email
+password
+
+# UserProfile   1 to 1 reln with user
+user_id(foreign_key)
+full name
+phone
+address
+role
+salary(optional)
+
+# Category
+id
+name
+
+# Menu 1 to many reln with category
+id
+name
+description(optional)
+category_id (foreign key category)
+price
+image
+
+# Table_avai
+id
+number/name
+is_available
+
+# Order 
+id
+user    (foreign key user)  1 to many reln
+quantity
+total_price
+status('Pending','complete','delivered')
+is_paid(bool)
+
+# OrderMenu
+order (foreign key order)
+Menu    (foreign key menu)
+
