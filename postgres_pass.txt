@@ -1,0 +1,6 @@
+database pass
+1234
+
+superuser pass
+razzs
+1234

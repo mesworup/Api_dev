@@ -25,7 +25,7 @@ class Table(models.Model):
     is_available=models.BooleanField(default=True)
     
     def __str__(self):
-        return f"Table {self.num} - {self.is_available}"
+        return f"Table {self.number} - {self.is_available}"
     
 class Order(models.Model): 
     STATUS_CHOICE =[

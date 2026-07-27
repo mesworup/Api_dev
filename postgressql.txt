@@ -1,0 +1,10 @@
+show all the created databases list
+    \l (small L)
+
+create new database
+    CREATE DATABASE j_rms;
+
+AI generated tables
+    https://www.mockaroo.com/
+
+aba hamle mockaroo bata data haru halda kheri if foreignkey wala field ho vani yo chai <fieldName_id> vayera janxa so mockaroo ma pani testai garney eg: category is foreign key so field name will be category_id
