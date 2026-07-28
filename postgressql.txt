@@ -8,3 +8,17 @@ AI generated tables
     https://www.mockaroo.com/
 
 aba hamle mockaroo bata data haru halda kheri if foreignkey wala field ho vani yo chai <fieldName_id> vayera janxa so mockaroo ma pani testai garney eg: category is foreign key so field name will be category_id
+
+# REST framework
+RE: REpresenational: representation of resourse in a format
+S: State: current state of resources
+T: Transfer: transfer beteen client and server
+
+Sues:
+GET
+POST
+PUT/PATCH
+DELETE
+
+Serializers:
+Serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON, XML or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data.
