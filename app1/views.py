@@ -7,79 +7,106 @@ from .models import *
 # Create your views here.
 
 # CLASS BASED VIEW
-# GENERIC APIVIEW
-from rest_framework.generics import GenericAPIView
-class CategoryGeneric(GenericAPIView):
-    queryset=Category.objects.all()
-    serializer_class=CategorySerializer
-    def get(self,request):
-        catagory=self.get_queryset()
-        serializer=self.serializer_class(catagory, many=True) 
-        return Response(serializer.data)
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-    def post(self,request):
-        serializer=self.serializer_class(data=request.data)    # deserialize, deserializer: convert json into quertyset
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        #return Response({"message":"Data Added,","result":serializer.data})
-        return Response(serializer.data)
-    
-
-class CategoryDetailGeneric(GenericAPIView):
+class CategoryGeneric(ListCreateAPIView):
     queryset=Category.objects.all()
     serializer_class=CategorySerializer
     
-    def get(self,request,pk):
-        catagory=self.get_object()
-        serializer=self.serializer_class(catagory) 
-        return Response(serializer.data)
+class CategoryDetailGeneric(RetrieveUpdateDestroyAPIView):
+    queryset=Category.objects.all()
+    serializer_class=CategorySerializer
 
-    def put(self,request,pk):
-        category=self.get_object()
-        serializer=CategorySerializer(category,data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-    
+# hamro delete ma validations haru xa thats why yesari lekhney ani override gardinxa
     def delete(self,request,pk):
+        #return self.destroy(request, pk)
         category=self.get_object()
         item=OrderMenu.objects.filter(menu__category=category).count()
         if item>0:
             return Response({"message":"Data cant be deleted. Protected foreign Key in ordermenu"})
         category.delete()
         return Response({"message":"Data has been deleted."})
-        
-        
-class CategoryGeneric(GenericAPIView):
-    queryset=Category.objects.all()
-    serializer_class=CategorySerializer
-    def get(self,request):
-        catagory=self.get_queryset()
-        serializer=self.serializer_class(catagory, many=True) 
-        return Response(serializer.data)
 
-    def post(self,request):
-        serializer=self.serializer_class(data=request.data)    # deserialize, deserializer: convert json into quertyset
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        #return Response({"message":"Data Added,","result":serializer.data})
-        return Response(serializer.data)
-    
 
-class TableGeneric(GenericAPIView):
+
+class TableGeneric(ListCreateAPIView):
     queryset=Table.objects.all()
     serializer_class=TableSerializer
-    def get(self,request):
-        table=self.get_queryset()
-        serializer=self.serializer_class(table, many=True) 
-        return Response(serializer.data)
+    
+class TableDetailGeneric(RetrieveUpdateDestroyAPIView):
+    queryset=Table.objects.all()
+    serializer_class=TableSerializer
 
-    def post(self,request):
-        serializer=self.serializer_class(data=request.data)    # deserialize, deserializer: convert json into quertyset
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        #return Response({"message":"Data Added,","result":serializer.data})
-        return Response(serializer.data)    
+
+
+
+# GENERIC APIVIEW with mixin
+# from rest_framework.generics import GenericAPIView
+# from rest_framework import mixins
+
+# class CategoryGeneric(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+#     queryset=Category.objects.all()
+#     serializer_class=CategorySerializer
+    
+#     def get(self,request):
+#         return self.list(self,request)
+#         # catagory=self.get_queryset()
+#         # serializer=self.serializer_class(catagory, many=True) 
+#         # return Response(serializer.data)
+
+#     def post(self,request):
+#         return self.create(self,request)
+#     #     serializer=self.serializer_class(data=request.data)    # deserialize, deserializer: convert json into quertyset
+#     #     serializer.is_valid(raise_exception=True)
+#     #     serializer.save()
+#     #     #return Response({"message":"Data Added,","result":serializer.data})
+#     #     return Response(serializer.data)
+    
+
+# class CategoryDetailGeneric(GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+#     queryset=Category.objects.all()
+#     serializer_class=CategorySerializer
+    
+#     def get(self,request,pk):
+#         return self.retrieve(request,pk)
+#         # catagory=self.get_object()
+#         # serializer=self.serializer_class(catagory) 
+#         # return Response(serializer.data)
+
+#     def put(self,request,pk):
+#         return self.update(request, pk)
+#         # category=self.get_object()
+#         # serializer=CategorySerializer(category,data=request.data)
+#         # serializer.is_valid(raise_exception=True)
+#         # serializer.save()
+#         # return Response(serializer.data)
+    
+#     def delete(self,request,pk):
+#         #return self.destroy(request, pk)
+#         category=self.get_object()
+#         item=OrderMenu.objects.filter(menu__category=category).count()
+#         if item>0:
+#             return Response({"message":"Data cant be deleted. Protected foreign Key in ordermenu"})
+#         category.delete()
+#         return Response({"message":"Data has been deleted."})
+        
+        
+    
+
+# class TableGeneric(GenericAPIView):
+#     queryset=Table.objects.all()
+#     serializer_class=TableSerializer
+#     def get(self,request):
+#         table=self.get_queryset()
+#         serializer=self.serializer_class(table, many=True) 
+#         return Response(serializer.data)
+
+#     def post(self,request):
+#         serializer=self.serializer_class(data=request.data)    # deserialize, deserializer: convert json into quertyset
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         #return Response({"message":"Data Added,","result":serializer.data})
+#         return Response(serializer.data)    
 
 
 

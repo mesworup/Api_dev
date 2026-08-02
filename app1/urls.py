@@ -9,6 +9,7 @@ urlpatterns = [
     path('category/<pk>/', CategoryDetailGeneric.as_view()),
     # path('category/<id>/', CategoryViewSingle.as_view()),
     path('table/', TableGeneric.as_view()),
+    path('table/<pk>/', TableDetailGeneric.as_view()),
     
     
     

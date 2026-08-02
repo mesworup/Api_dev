@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category
+from .models import Category, Table
 
 class CategorySerializer(serializers.Serializer):
     id= serializers.IntegerField(read_only=True)    # database bata read hunxa but yeslai post garda hudaina
@@ -30,4 +30,11 @@ class TableSerializer(serializers.Serializer):
     number=serializers.CharField()
     is_available=serializers.BooleanField()
 
+    def create(self, validated_data):
+            return Table.objects.create(number= validated_data.get('number'))
 
+
+    def update(self, instance, validated_data):
+        instance.number=validated_data.get('number',instance.number)
+        instance.save()
+        return instance
