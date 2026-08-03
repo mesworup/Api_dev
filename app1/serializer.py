@@ -1,13 +1,24 @@
 from rest_framework.serializers import ModelSerializer
 from .models import Category, Table
 
+
+# serializer for Category
 class CategoryModelSerializer(ModelSerializer):
     class Meta:
         model = Category
         fields='__all__'
         # fields=['name']
-        # exclude=['id']
+        # fields = ['id','name']
+        # exclude=['name']
 
+# serializer for Table
+class TableModelSerializer(ModelSerializer):
+    class Meta:
+        model = Table
+        fields='__all__'
+        # fields=['name']
+        # fields = ['id','name']
+        # exclude=['name']
 
 
 # class CategorySerializer(serializers.Serializer):

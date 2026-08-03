@@ -14,13 +14,29 @@ class CategoryModelViewSet(ModelViewSet):
     queryset=Category.objects.all()
     serializer_class=CategoryModelSerializer
 
-    def destroy(self,request,id):
-        category=Category.objects.get(id=id)
+    def destroy(self,request,pk):
+        category=Category.objects.get(pk=pk)
         item=OrderMenu.objects.filter(menu__category=category).count()
         if item>0:
             return Response({"message":"Data cant be deleted. Protected foreign Key in ordermenu"})
         category.delete()
         return Response({"message":"Data has been deleted."})
+
+
+class TableModelViewSet(ModelViewSet):
+    queryset=Table.objects.all()
+    serializer_class=TableModelSerializer
+
+    def destroy(self, request, pk=None):
+        table = self.get_object()
+        table.delete()
+        return Response({"message": "Data has been deleted."})
+
+
+
+
+
+
 
 
 # class CategoryViewSet(ViewSet):
@@ -57,7 +73,35 @@ class CategoryModelViewSet(ModelViewSet):
 #         return Response({"message":"Data has been deleted."})
 
 
+# class TableViewSet(ViewSet):
+#     def list(self,request):
+#         table=Table.objects.all()
+#         serializer=TableSerializer(table, many=True) 
+#         return Response(serializer.data)
 
+#     def create(self,request):
+#         serializer=TableSerializer(data=request.data)    # deserialize, deserializer: convert json into quertyset
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
+
+# class TableDetailView(ViewSet):
+#     def retrieve(self,request,id):
+#         table=Table.objects.get(id=id)
+#         serializer=TableSerializer(table)
+#         return Response(serializer.data)
+
+#     def update(self,request,id):
+#         table=Table.objects.get(id=id)
+#         serializer=TableSerializer(table,data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
+
+#     def destroy(self, request, pk=None):
+#         table = self.get_object()
+#         table.delete()
+#         return Response({"message": "Data has been deleted."})
 
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView

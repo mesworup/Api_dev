@@ -27,3 +27,9 @@ allowing parsed data to be converted back into complex types, after first valida
 
 To handle both GET and POST requests
     @api_view(['GET','POST']) 
+
+
+API CREATION KO LAGI JUN USE GARDA NI VAYO BUT MOSTLY
+
+# mostly for all data ModelViewSet use garney
+ani for single data Generic + mixin use
