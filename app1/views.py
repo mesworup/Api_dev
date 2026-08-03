@@ -2,25 +2,20 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from rest_framework.response import Response
-from .serializer import CategorySerializer, TableSerializer
+from .serializer import *
 from .models import *
 # Create your views here.
 
 # CLASS BASED VIEW
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+# VIEWSET:
 
-class CategoryGeneric(ListCreateAPIView):
+from rest_framework.viewsets import ViewSet, ModelViewSet
+class CategoryModelViewSet(ModelViewSet):
     queryset=Category.objects.all()
-    serializer_class=CategorySerializer
-    
-class CategoryDetailGeneric(RetrieveUpdateDestroyAPIView):
-    queryset=Category.objects.all()
-    serializer_class=CategorySerializer
+    serializer_class=CategoryModelSerializer
 
-# hamro delete ma validations haru xa thats why yesari lekhney ani override gardinxa
-    def delete(self,request,pk):
-        #return self.destroy(request, pk)
-        category=self.get_object()
+    def destroy(self,request,id):
+        category=Category.objects.get(id=id)
         item=OrderMenu.objects.filter(menu__category=category).count()
         if item>0:
             return Response({"message":"Data cant be deleted. Protected foreign Key in ordermenu"})
@@ -28,14 +23,72 @@ class CategoryDetailGeneric(RetrieveUpdateDestroyAPIView):
         return Response({"message":"Data has been deleted."})
 
 
+# class CategoryViewSet(ViewSet):
+#     def list(self,request):
+#         catagory=Category.objects.all()
+#         serializer=CategorySerializer(catagory, many=True) 
+#         return Response(serializer.data)
 
-class TableGeneric(ListCreateAPIView):
-    queryset=Table.objects.all()
-    serializer_class=TableSerializer
+#     def create(self,request):
+#         serializer=CategorySerializer(data=request.data)    # deserialize, deserializer: convert json into quertyset
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
+
+# class CategoryDetailView(ViewSet):
+#     def retrieve(self,request,id):
+#         category=Category.objects.get(id=id)
+#         serializer=CategorySerializer(category)
+#         return Response(serializer.data)
+
+#     def update(self,request,id):
+#         category=Category.objects.get(id=id)
+#         serializer=CategorySerializer(category,data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
+
+#     def destroy(self,request,id):
+#         category=Category.objects.get(id=id)
+#         item=OrderMenu.objects.filter(menu__category=category).count()
+#         if item>0:
+#             return Response({"message":"Data cant be deleted. Protected foreign Key in ordermenu"})
+#         category.delete()
+#         return Response({"message":"Data has been deleted."})
+
+
+
+
+
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+
+# class CategoryGeneric(ListCreateAPIView):
+#     queryset=Category.objects.all()
+#     serializer_class=CategorySerializer
     
-class TableDetailGeneric(RetrieveUpdateDestroyAPIView):
-    queryset=Table.objects.all()
-    serializer_class=TableSerializer
+# class CategoryDetailGeneric(RetrieveUpdateDestroyAPIView):
+#     queryset=Category.objects.all()
+#     serializer_class=CategorySerializer
+
+# # hamro delete ma validations haru xa thats why yesari lekhney ani override gardinxa
+#     def delete(self,request,pk):
+#         #return self.destroy(request, pk)
+#         category=self.get_object()
+#         item=OrderMenu.objects.filter(menu__category=category).count()
+#         if item>0:
+#             return Response({"message":"Data cant be deleted. Protected foreign Key in ordermenu"})
+#         category.delete()
+#         return Response({"message":"Data has been deleted."})
+
+
+
+# class TableGeneric(ListCreateAPIView):
+#     queryset=Table.objects.all()
+#     serializer_class=TableSerializer
+    
+# class TableDetailGeneric(RetrieveUpdateDestroyAPIView):
+#     queryset=Table.objects.all()
+#     serializer_class=TableSerializer
 
 
 

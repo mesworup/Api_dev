@@ -1,22 +1,31 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from .models import Category, Table
 
-class CategorySerializer(serializers.Serializer):
-    id= serializers.IntegerField(read_only=True)    # database bata read hunxa but yeslai post garda hudaina
-    name=serializers.CharField()
-    
-    def create(self, validated_data):
-        return Category.objects.create(name= validated_data.get('name'))
+class CategoryModelSerializer(ModelSerializer):
+    class Meta:
+        model = Category
+        fields='__all__'
+        # fields=['name']
+        # exclude=['id']
 
-    # validated_data ma chai hamle api through haleko data aauxa
-    # {
-    # "name":"category1"
-    # }
+
+
+# class CategorySerializer(serializers.Serializer):
+#     id= serializers.IntegerField(read_only=True)
+#     name= serializer.CharField()
+        
+#     def create(self, validated_data):
+#         return Category.objects.create(name= validated_data.get('name'))
+
+#     # validated_data ma chai hamle api through haleko data aauxa
+#     # {
+#     # "name":"category1"
+#     # }
     
-    def update(self, instance, validated_data):
-        instance.name=validated_data.get('name',instance.name)
-        instance.save()
-        return instance
+#     def update(self, instance, validated_data):
+#         instance.name=validated_data.get('name',instance.name)
+#         instance.save()
+#         return instance
 # yo chai model.py ma yesari hunxa 
 
 # class Table(models.Model):
@@ -25,16 +34,17 @@ class CategorySerializer(serializers.Serializer):
 
 # hamle odels.py herera serializers ma yesari lekhxa
 
-class TableSerializer(serializers.Serializer):
-    id= serializers.IntegerField()
-    number=serializers.CharField()
-    is_available=serializers.BooleanField()
+# class TableSerializer(serializers.Serializer):
+#     id= serializers.IntegerField()
+#     number=serializers.CharField()
+#     is_available=serializers.BooleanField()
 
-    def create(self, validated_data):
-            return Table.objects.create(number= validated_data.get('number'))
+#     def create(self, validated_data):
+#             return Table.objects.create(number= validated_data.get('number'))
 
+#     def update(self, instance, validated_data):
+#         instance.number=validated_data.get('number',instance.number)
+#         instance.save()
+#         return instance
+    
 
-    def update(self, instance, validated_data):
-        instance.number=validated_data.get('number',instance.number)
-        instance.save()
-        return instance
