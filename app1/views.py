@@ -35,7 +35,7 @@ class TableModelViewSet(ModelViewSet):
 
 class MenuModelViewSet(ModelViewSet):
     queryset = Menu.objects.all()
-    serializer_class = MenuModelSerializer
+    serializer_class = MenuSerializer
 
 
 

@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 from rest_framework import routers
 
-route = routers.SimpleRouter()
+route = routers.DefaultRouter()
 route.register('category',CategoryModelViewSet)
 route.register('table',TableModelViewSet)
 route.register('menu',MenuModelViewSet)
