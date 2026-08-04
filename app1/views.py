@@ -33,6 +33,9 @@ class TableModelViewSet(ModelViewSet):
         return Response({"message": "Data has been deleted."})
 
 
+class MenuModelViewSet(ModelViewSet):
+    queryset = Menu.objects.all()
+    serializer_class = MenuModelSerializer
 
 
 
