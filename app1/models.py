@@ -28,7 +28,7 @@ class Table(models.Model):
         return f"Table {self.number} - {self.is_available}"
     
 class Order(models.Model): 
-    STATUS_CHOICE =[
+    STATUS_CHOICE =[ 
         ('P', 'Pending'),
         ('C', 'Completed'),
         ('D', 'Delivered')

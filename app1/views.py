@@ -4,15 +4,22 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from .serializer import *
 from .models import *
+from rest_framework.pagination import PageNumberPagination
+from .pagination import CategoryPagination
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import MenuFilter
 # Create your views here.
 
 # CLASS BASED VIEW
 # VIEWSET:
 
 from rest_framework.viewsets import ViewSet, ModelViewSet
+
 class CategoryModelViewSet(ModelViewSet):
     queryset=Category.objects.all()
     serializer_class=CategoryModelSerializer
+    pagination_class=CategoryPagination
 
     def destroy(self,request,pk):
         category=Category.objects.get(pk=pk)
@@ -34,11 +41,15 @@ class TableModelViewSet(ModelViewSet):
 
 
 class MenuModelViewSet(ModelViewSet):
-    queryset = Menu.objects.all()
+    queryset = Menu.objects.prefetch_related('category').all()  
+    # optimization
+    # prefetch_related ley chai hamro yo table ma vako foreign key jun chai category table ma xa tyo table lai join relation ma lyauxa so that sites ma loading speed xito hos
     serializer_class = MenuSerializer
-
-
-
+    pagination_class = PageNumberPagination  # pagination only in menu
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = MenuFilter   
+    #filterset_fields = ['category']  # search filter ma catogory based search garna payo
+    search_fields = ['name', 'category__name']  # used in foreign key: double underscore means Menu table ma vako category field ie category foreign key bata Category table ko name leenxa: category table ko name field
 
 
 
